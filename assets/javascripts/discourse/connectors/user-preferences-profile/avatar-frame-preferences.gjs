@@ -85,32 +85,31 @@ export default class AvatarFramePreferences extends Component {
     <div class="control-group avatar-frame-preferences">
       <label class="control-label">{{i18n "avatar_frames.title"}}</label>
       <div class="controls">
-        <div class="avatar-frame-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;">
+        <div class="avatar-frame-grid">
           {{#each this.frames as |frame|}}
-            <button 
-              type="button" 
-              class="btn btn-default avatar-frame-btn {{if (eq this.selectedFrame frame.id) 'btn-primary'}} {{if frame.isLocked 'is-locked'}}"
-              style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; border-radius: 8px; width: 100%;"
+            <button
+              type="button"
+              class="avatar-frame-btn {{if (eq this.selectedFrame frame.id) 'is-selected'}} {{if frame.isLocked 'is-locked'}}"
               {{on "click" (fn this.selectFrame frame)}}
               disabled={{frame.isLocked}}
               title={{frame.lockedHint}}
             >
-              <div class="preview-avatar-wrapper" style="margin-bottom: 8px;">
-                <div class="post-avatar" style="position: relative; width: 45px; height: 45px; padding-top: 0;">
+              <div class="preview-avatar-wrapper">
+                <div class="post-avatar">
                   {{avatar this.currentUser imageSize="large"}}
                   {{#if (notEq frame.id "none")}}
                     <div class="avatar-frame-overlay frame-{{frame.id}}"></div>
                   {{/if}}
                 </div>
               </div>
-              <span class="frame-name" style="font-size: 0.85em; text-align: center; font-weight: bold;">{{frame.name}}</span>
+              <span class="frame-name">{{frame.name}}</span>
               {{#if frame.isLocked}}
-                <span class="frame-hint" style="font-size: 0.75em; text-align: center; color: var(--danger); margin-top: 4px;">{{frame.lockedHint}}</span>
+                <span class="frame-hint">{{frame.lockedHint}}</span>
               {{/if}}
             </button>
           {{/each}}
         </div>
-        <div class="instructions" style="margin-top: 10px; font-size: 0.9em; color: var(--primary-medium);">
+        <div class="instructions">
           {{i18n "avatar_frames.instructions"}}
         </div>
       </div>
