@@ -109,28 +109,92 @@
   }
 }
 
-.avatar-frame-btn.is-locked { opacity: 0.5; filter: grayscale(100%); cursor: not-allowed; }
-
 .avatar-frame-preferences {
+  .avatar-frame-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .avatar-frame-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    min-height: 116px;
+    padding: 14px 8px;
+    border: 2px solid var(--primary-low);
+    border-radius: 10px;
+    background: var(--secondary);
+    color: var(--primary);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover:not(:disabled) {
+      border-color: var(--tertiary);
+      background: var(--primary-very-low);
+    }
+
+    &.is-selected {
+      border-color: var(--tertiary);
+      background: var(--tertiary-low);
+      box-shadow: 0 0 0 2px var(--tertiary);
+    }
+
+    &.is-locked {
+      opacity: 0.5;
+      filter: grayscale(100%);
+      cursor: not-allowed;
+    }
+  }
+
   .preview-avatar-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
   }
-  
+
   .post-avatar {
-    margin: 0 auto !important;
-    display: block !important;
-    width: 45px !important;
-    height: 45px !important;
-    
+    position: relative;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    margin: 0 !important;
+    padding: 0 !important;
+
     img.avatar {
-      width: 100% !important;
-      height: 100% !important;
+      display: block;
+      width: 48px !important;
+      height: 48px !important;
+      border-radius: 50%;
       object-fit: cover !important;
       margin: 0 !important;
       padding: 0 !important;
     }
+  }
+
+  .frame-name {
+    font-size: 0.85em;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    color: inherit;
+    word-break: break-word;
+  }
+
+  .frame-hint {
+    font-size: 0.75em;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--danger);
+  }
+
+  .instructions {
+    margin-top: 12px;
+    font-size: 0.9em;
+    color: var(--primary-medium);
   }
 }
