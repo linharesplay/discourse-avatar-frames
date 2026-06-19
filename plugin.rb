@@ -56,6 +56,14 @@ after_initialize do
   # Make it public so the frontend can read it everywhere
   allow_public_user_custom_field(:avatar_frame)
 
+  # Expose ALL of the current user's group names (including automatic and
+  # hidden groups) so the frontend lock detection matches the server-side
+  # permission check exactly. currentUser.groups only contains *visible*
+  # groups, which caused group-gated frames to stay locked for eligible users.
+  add_to_serializer(:current_user, :avatar_frame_group_names) do
+    object.groups.pluck(:name)
+  end
+
   # Serialize into User (Profile / Card)
   add_to_serializer(:user, :avatar_frame) do
     object.custom_fields['avatar_frame']
