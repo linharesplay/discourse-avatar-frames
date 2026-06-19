@@ -40,9 +40,16 @@ export default class AvatarFramePreferences extends Component {
             lockedHint = I18n.t("avatar_frames.requires_level", { level: requiredLevel });
           }
         } else if (condition.startsWith("group:")) {
-          const requiredGroup = condition.replace("group:", "").trim();
-          const userGroups = this.currentUser.groups || [];
-          const hasGroup = userGroups.some(g => g.name.toLowerCase() === requiredGroup.toLowerCase());
+          const requiredGroup = condition.replace("group:", "").trim().toLowerCase();
+          // Use the full group-name list serialized by the plugin (matches the
+          // server-side permission check). currentUser.groups only contains
+          // groups visible to the user, so it misses hidden/automatic groups.
+          const userGroups =
+            this.currentUser.avatar_frame_group_names ||
+            (this.currentUser.groups || []).map((g) => g.name);
+          const hasGroup = userGroups.some(
+            (name) => name && name.toLowerCase() === requiredGroup
+          );
           
           if (!hasGroup) {
             isLocked = true;
